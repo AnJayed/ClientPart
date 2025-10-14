@@ -12,7 +12,7 @@ body {
     margin: 0;
   }
   
-  input#msg {
+  input#nome{
     width: 300px;
     padding: 10px 15px;
     border: 2px solid #ffffffaa;
@@ -21,15 +21,32 @@ body {
     outline: none;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     transition: 0.2s;
+    margin: 1em;
   }
   
-  input#msg:focus {
+  input#nome:focus {
+    border-color: #0c83e6;
+    box-shadow: 0 0 8px #ffb6c1;
+  }
+  input#pwd{
+    width: 300px;
+    padding: 10px 15px;
+    border: 2px solid #ffffffaa;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: 0.2s;
+    margin-bottom: 0.7em;
+  }
+  
+  input#pwd:focus {
     border-color: #0c83e6;
     box-shadow: 0 0 8px #ffb6c1;
   }
   
   button {
-    margin: 10px;
+    margin: 5px;
     padding: 10px 20px;
     background-color: #0c83e6;
     border: none;
