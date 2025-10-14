@@ -4,17 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script>
+      "use strict";
+      function gestoreRicezione(messaggioRicevuto){
+          document.getElementById("ricezione").textContent += messaggioRicevuto.data + "\n"; // [1]
+      }
+  
+      let ws = new WebSocket("ws://10.1.0.52:8090/chat25/5i2"); // [2]
+      ws.onmessage = gestoreRicezione;
+  
+      function inviaAlServer(){
+          let messaggioDaInviare = document.getElementById("msg").value;
+          ws.send( messaggioDaInviare );  // [3]
+      }
+      function chiudiLaConnessione(){
+          ws.close();  // [4]
+      }
+  
+    </script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
-<label for="nome">Nome:</label>
-<input type="text" id="nome" name="nome">
-
-<!-- Metodo implicito: input racchiuso nella label -->
-<label>
-  Cognome:
-  <input type="text" name="cognome">
-</label>
-    
+  <input id="msg" type="text">
+  <button onClick="inviaAlServer()">Invia il messaggio</button>
+  <button onClick="chiudiLaConnessione()">Chiudi la connessione</button>
 </body>
 </html>
