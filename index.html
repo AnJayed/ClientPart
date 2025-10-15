@@ -1,32 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script>
       "use strict";
       let nome = "";
       let pwd;
 
-      function gestoreRicezione(messaggioRicevuto){
-          document.getElementById("ricezione").textContent += messaggioRicevuto.data + "\n"; // [1]
+      function gestoreRicezione(messaggioRicevuto) {
+        let mess = messaggioRicevuto.data.trim();
+
+        console.log("Messaggio ricevuto:", mess);
+
+        if (mess === "R|ok") {
+         
+          window.location.href = "chat-page.html";
+        } else if (mess === "R|no") {
+          alert("Credenziali errate, riprova!");
+        } else {
+          
+          document.getElementById("ricezione").textContent += "\n" + mess;
+        }
       }
-  
+
       let ws = new WebSocket("ws://10.1.0.52:8090/chat25/5i2"); // [2]
       ws.onmessage = gestoreRicezione;
-  
-      function connettiAlServer(){
-          let messaggioDaInviare = document.getElementById("msg").value;
-          ws.send( messaggioDaInviare );  // [3]
+
+      function connettiAlServer() {
+        let messaggioDaInviare =
+          "A" +
+          "|" +
+          document.getElementById("nome").value +
+          "|" +
+          document.getElementById("pwd").value;
+        console.log(messaggioDaInviare);
+        ws.send(messaggioDaInviare); // [3]
       }
-  
     </script>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <input id="nome" type="text" placeholder="Inserisci il tuo nome">
-  <input id="pwd" type="password" placeholder="Inserisci la tua password">
-  <button onClick="connettiAlServer()">Connetti al server</button>
-</body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Connettiti al SERVER!</h1>
+    <input id="nome" type="text" placeholder="Inserisci il tuo nome" />
+    <input id="pwd" type="password" placeholder="Inserisci la tua password" />
+    <button onClick="connettiAlServer()">Connetti al server</button>
+  </body>
 </html>

@@ -11,6 +11,10 @@ body {
     text-align: center;
     margin: 0;
   }
+  h1{
+    color: black;
+    
+  }
   
   input#nome{
     width: 300px;
@@ -64,9 +68,9 @@ body {
   }
   
   #ricezione {
-    width: 80%;
+    width: 16%;
     max-width: 600px;
-    height: 200px;
+    height: 90px;
     margin-top: 20px;
     padding: 10px;
     border-radius: 10px;
