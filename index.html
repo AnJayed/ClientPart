@@ -8,20 +8,31 @@
       "use strict";
       let nome = "";
       let pwd;
+      
 
       function gestoreRicezione(messaggioRicevuto) {
+        let padre = document.querySelector("body");
+        let titolodaRimuovere = document.querySelector("h1");
+        let campoDaRimuovere1 = document.getElementById("nome");
+        let campoDaRimuovere2 = document.getElementById("pwd");
+        let bottoneConnessione = document.getElementById("bottoneConnessione");
         let mess = messaggioRicevuto.data.trim();
 
         console.log("Messaggio ricevuto:", mess);
 
         if (mess === "R|ok") {
          
-          //
+          
+          padre.removeChild(titolodaRimuovere);
+          padre.removeChild(campoDaRimuovere1);
+          padre.removeChild(campoDaRimuovere2);
+          padre.removeChild(bottoneConnessione);
+          
         } else if (mess === "R|no") {
           alert("Credenziali errate, riprova!");
         } else {
           
-          document.getElementById("ricezione").textContent += "\n" + mess;
+        
         }
       }
 
@@ -45,6 +56,6 @@
     <h1>Connettiti al SERVER!</h1> 
     <input id="nome" type="text" placeholder="Inserisci il tuo nome" />
     <input id="pwd" type="password" placeholder="Inserisci la tua password" />
-    <button onClick="connettiAlServer()">Connetti al server</button>
+    <button id="bottoneConnessione" onClick="connettiAlServer()">Connetti al server</button>
   </body>
 </html>
