@@ -3,40 +3,33 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Chat</title>
     <script>
       "use strict";
       let nome = "";
       let pwd;
       
 
-      function gestoreRicezione(messaggioRicevuto) {
-        let padre = document.querySelector("body");
-        let titolodaRimuovere = document.querySelector("h1");
-        let campoDaRimuovere1 = document.getElementById("nome");
-        let campoDaRimuovere2 = document.getElementById("pwd");
-        let bottoneConnessione = document.getElementById("bottoneConnessione");
+      function gestoreRicezione(messaggioRicevuto) {        
         let mess = messaggioRicevuto.data.trim();
 
         console.log("Messaggio ricevuto:", mess);
 
         if (mess === "R|ok") {
-         
+          document.getElementById("login").style.display = "none";  
+          document.getElementById("chat").style.display = "block";
           
-          padre.removeChild(titolodaRimuovere);
-          padre.removeChild(campoDaRimuovere1);
-          padre.removeChild(campoDaRimuovere2);
-          padre.removeChild(bottoneConnessione);
+         
           
         } else if (mess === "R|no") {
           alert("Credenziali errate, riprova!");
-        } else {
-          
-        
+        } else if (mess[0] === "M") {
+          console.log("ciao");
+        //DA FARE
         }
       }
 
-      let ws = new WebSocket("ws://10.1.0.52:8090/chat25/5i2"); // [2]
+      let ws = new WebSocket("ws://10.1.0.52:8090/chat25/5i2"); 
       ws.onmessage = gestoreRicezione;
 
       function connettiAlServer() {
@@ -47,15 +40,35 @@
           "|" +
           document.getElementById("pwd").value;
         console.log(messaggioDaInviare);
-        ws.send(messaggioDaInviare); // [3]
+        ws.send(messaggioDaInviare); 
       }
     </script>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body> 
-    <h1>Connettiti al SERVER!</h1> 
-    <input id="nome" type="text" placeholder="Inserisci il tuo nome" />
-    <input id="pwd" type="password" placeholder="Inserisci la tua password" />
-    <button id="bottoneConnessione" onClick="connettiAlServer()">Connetti al server</button>
+    
+    
+    <section id="login">
+      <img src="Logo.png" alt="logo serio" style="margin-bottom: 0;">
+      <h1 style="margin: 0;">Connettiti al SERVER!</h1> 
+      <input id="nome" type="text" placeholder="Inserisci il tuo nome" />
+      <input id="pwd" type="password" placeholder="Inserisci la tua password" />
+      <button id="bottoneConnessione" onClick="connettiAlServer()">Connetti al server</button>
+    </section>
+    
+
+    <section id="chat" style="display: none;">
+      <h2>Chat</h2>
+    
+      
+      <div id="areaMessaggi" style="border:1px solid #ccc; height:550px; width: 550px; overflow-y:auto; padding:5px; margin-bottom:10px;">
+      </div>
+    
+      
+      <div style="display:flex; gap:5px;">
+        <input id="msg" type="text" placeholder="Scrivi un messaggio..." style="flex:1;" />
+        <button id="bottoneInvia">Invia</button>
+      </div>
+    </section>
   </body>
 </html>

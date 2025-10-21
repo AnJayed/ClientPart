@@ -1,5 +1,3 @@
-/* style.css */
-
 body {
     font-family: "Segoe UI", Roboto, sans-serif;
     background: linear-gradient(135deg, #a8edea, #fed6e3);
@@ -13,7 +11,13 @@ body {
   }
   h1{
     color: black;
+    margin-top: -2;
     
+  }
+  img{
+    height: 10em;
+    padding: 0;
+    margin: 0;
   }
   
   input#nome{
@@ -79,4 +83,11 @@ body {
     white-space: pre-wrap;
     box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
   }
+  #login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10em;
+  }
+  
   
