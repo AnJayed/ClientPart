@@ -71,23 +71,130 @@ body {
     transform: scale(1.05);
   }
   
-  #ricezione {
-    width: 16%;
-    max-width: 600px;
-    height: 90px;
-    margin-top: 20px;
-    padding: 10px;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.7);
-    overflow-y: auto;
-    white-space: pre-wrap;
-    box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
-  }
+  
   #login {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-bottom: 10em;
   }
+
+  section#chat{
+    display: none;
+  }
+
+  div#areaMessaggi{
+    border:1px solid #ccc;
+    height: 650px;
+    width: 650px;
+    overflow-y: auto;
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+  div#messaggioRicevutoSingolo{
+    margin: 1em;
+  }
   
+  body {
+    font-family: "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(135deg, #a8edea, #fed6e3);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+  }
+  
+  section#chat {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 600px;
+    max-width: 90%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  section#chat h2 {
+    color: #0c83e6;
+    margin-bottom: 10px;
+  }
+  
+  div#areaMessaggi {
+    width: 100%;
+    height: 400px;
+    overflow-y: auto;
+    background: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  div#messaggioRicevutoSingolo {
+    background: #e7f3ff;
+    border-radius: 8px;
+    padding: 8px 10px;
+    margin: 6px 0;
+    text-align: left;
+    max-width: 80%;
+    word-wrap: break-word;
+  }
+  
+  input#msg {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+  
+  input#msg:focus {
+    border-color: #0c83e6;
+  }
+  
+  button#bottoneInvia {
+    background-color: #0c83e6;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    padding: 10px 15px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-left: 5px;
+  }
+  
+  button#bottoneInvia:hover {
+    background-color: #ff85c1;
+  }
+  .messaggio {
+    border-radius: 10px;
+    padding: 8px 12px;
+    margin: 8px 0;
+    max-width: 80%;
+    word-wrap: break-word;
+    text-align: left; 
+  }
+  
+  .autore {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9rem;
+    margin-bottom: 3px;
+    text-align: left; 
+  }
+  
+  .icona-autore {
+    font-size: 1rem;
+  }
+  
+  .messaggio hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin-top: 6px;
+    margin-bottom: 2px;
+  }
   

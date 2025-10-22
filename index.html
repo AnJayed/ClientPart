@@ -8,66 +8,115 @@
       "use strict";
       let nome = "";
       let pwd;
-      
 
-      function gestoreRicezione(messaggioRicevuto) {        
+      function gestoreRicezione(messaggioRicevuto) {
         let mess = messaggioRicevuto.data.trim();
-
         console.log("Messaggio ricevuto:", mess);
 
         if (mess === "R|ok") {
-          document.getElementById("login").style.display = "none";  
-          document.getElementById("chat").style.display = "block";
-          
-         
-          
+          document.getElementById("login").style.display = "none";
+          document.getElementById("chat").style.display = "flex";
         } else if (mess === "R|no") {
           alert("Credenziali errate, riprova!");
-        } else if (mess[0] === "M") {
-          console.log("ciao");
-        //DA FARE
+        } else if (mess.startsWith("M|")) {
+          let parts = mess.split("|");
+          let autore = parts[1];
+          let testo = parts[parts.length - 1];
+
+          let area = document.getElementById("areaMessaggi");
+
+          let divMessaggio = document.createElement("div");
+          divMessaggio.classList.add("messaggio");
+
+          if (autore === document.getElementById("nome").value) {
+            divMessaggio.classList.add("mio");
+          } else {
+            divMessaggio.classList.add("altro");
+          }
+
+          let autoreDiv = document.createElement("div");
+          autoreDiv.classList.add("autore");
+
+          let icona = document.createElement("span");
+          icona.classList.add("icona-autore");
+          icona.textContent = "👤";
+
+          let nomeAutore = document.createElement("strong");
+          nomeAutore.textContent = autore;
+
+          autoreDiv.appendChild(icona);
+          autoreDiv.appendChild(nomeAutore);
+
+          let testoDiv = document.createElement("div");
+          testoDiv.textContent = testo;
+
+          let separatore = document.createElement("hr");
+
+          divMessaggio.appendChild(autoreDiv);
+          divMessaggio.appendChild(testoDiv);
+          divMessaggio.appendChild(separatore);
+
+          area.appendChild(divMessaggio);
+          area.scrollTop = area.scrollHeight;
         }
       }
 
-      let ws = new WebSocket("ws://10.1.0.52:8090/chat25/5i2"); 
+      let ws = new WebSocket("ws://10.1.0.52:8090/chat25/5i2");
       ws.onmessage = gestoreRicezione;
 
       function connettiAlServer() {
-        let messaggioDaInviare =
+        let loginDaInviare =
           "A" +
           "|" +
           document.getElementById("nome").value +
           "|" +
           document.getElementById("pwd").value;
-        console.log(messaggioDaInviare);
-        ws.send(messaggioDaInviare); 
+        console.log(loginDaInviare);
+        ws.send(loginDaInviare);
+      }
+
+      function inviaIlMessaggio() {
+        let messaggioDaInviare =
+          "M" +
+          "|" +
+          document.getElementById("nome").value +
+          "|" +
+          "2025-10-08T12:34:197" +
+          "|" +
+          "IT" +
+          "|" +
+          "text/plain" +
+          "|" +
+          document.getElementById("msg").value;
+        ws.send(messaggioDaInviare);
       }
     </script>
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body> 
-    
-    
+  <body>
     <section id="login">
-      <img src="Logo.png" alt="logo serio" style="margin-bottom: 0;">
-      <h1 style="margin: 0;">Connettiti al SERVER!</h1> 
+      <img src="Logo.png" alt="logo serio" style="margin-bottom: 0" />
+      <h1 style="margin: 0">Connettiti al SERVER!</h1>
       <input id="nome" type="text" placeholder="Inserisci il tuo nome" />
       <input id="pwd" type="password" placeholder="Inserisci la tua password" />
-      <button id="bottoneConnessione" onClick="connettiAlServer()">Connetti al server</button>
+      <button id="bottoneConnessione" onClick="connettiAlServer()">
+        Connetti al server
+      </button>
     </section>
-    
 
-    <section id="chat" style="display: none;">
+    <section id="chat">
       <h2>Chat</h2>
-    
-      
-      <div id="areaMessaggi" style="border:1px solid #ccc; height:550px; width: 550px; overflow-y:auto; padding:5px; margin-bottom:10px;">
-      </div>
-    
-      
-      <div style="display:flex; gap:5px;">
-        <input id="msg" type="text" placeholder="Scrivi un messaggio..." style="flex:1;" />
-        <button id="bottoneInvia">Invia</button>
+
+      <div id="areaMessaggi"></div>
+
+      <div style="display: flex; gap: 5px">
+        <input
+          id="msg"
+          type="text"
+          placeholder="Scrivi un messaggio..."
+          style="flex: 1"
+        />
+        <button id="bottoneInvia" onclick="inviaIlMessaggio()">Invia</button>
       </div>
     </section>
   </body>
