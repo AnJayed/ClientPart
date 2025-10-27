@@ -16,6 +16,7 @@
         if (mess === "R|ok") {
           document.getElementById("login").style.display = "none";
           document.getElementById("chat").style.display = "flex";
+          document.getElementById("utenticonnessi").style.display = "block";
         } else if (mess === "R|no") {
           alert("Credenziali errate, riprova!");
         } else if (mess.startsWith("M|")) {
@@ -37,14 +38,25 @@
           let autoreDiv = document.createElement("div");
           autoreDiv.classList.add("autore");
 
-          let icona = document.createElement("span");
-          icona.classList.add("icona-autore");
-          icona.textContent = "👤";
+          let immagine = document.createElement("img");
+          immagine.classList.add("foto-autore");
+
+          if (autore === document.getElementById("nome").value) {
+            immagine.src = "icona-persona.png";
+          } else {
+            immagine.src = "icona-persona.png";
+          }
+          immagine.alt = autore;
+          immagine.width = 24;
+          immagine.height = 24;
+          immagine.style.borderRadius = "50%";
 
           let nomeAutore = document.createElement("strong");
           nomeAutore.textContent = autore;
 
-          autoreDiv.appendChild(icona);
+          autoreDiv.appendChild(immagine);
+          autoreDiv.appendChild(nomeAutore);
+
           autoreDiv.appendChild(nomeAutore);
 
           let testoDiv = document.createElement("div");
@@ -58,6 +70,9 @@
 
           area.appendChild(divMessaggio);
           area.scrollTop = area.scrollHeight;
+        } else if (mess.startsWith("U|")) {
+          aggiornaUtenti(mess);
+          console.log("aggiorno gli utenti");
         }
       }
 
@@ -76,12 +91,14 @@
       }
 
       function inviaIlMessaggio() {
+        let timestamp = new Date().toISOString().slice(0, -1);
+        console.log("timestamp", timestamp);
         let messaggioDaInviare =
           "M" +
           "|" +
           document.getElementById("nome").value +
           "|" +
-          "2025-10-08T12:34:197" +
+          timestamp +
           "|" +
           "IT" +
           "|" +
@@ -89,6 +106,18 @@
           "|" +
           document.getElementById("msg").value;
         ws.send(messaggioDaInviare);
+      }
+      function aggiornaUtenti(mess) {
+        let utenti = mess.split("|");
+        let areaUtenti = document.getElementById("listaUtenti");
+        areaUtenti.innerHTML = "";
+
+        for (let i = 1; i < utenti.length; i++) {
+          let div = document.createElement("div");
+          div.classList.add("utente");
+          div.textContent = utenti[i];
+          areaUtenti.appendChild(div);
+        }
       }
     </script>
     <link rel="stylesheet" href="style.css" />
@@ -104,20 +133,27 @@
       </button>
     </section>
 
-    <section id="chat">
-      <h2>Chat</h2>
+    <div id="mainContainer" style="display: flex">
+      <section id="chat">
+        <h2>Chat</h2>
 
-      <div id="areaMessaggi"></div>
+        <div id="areaMessaggi"></div>
 
-      <div style="display: flex; gap: 5px">
-        <input
-          id="msg"
-          type="text"
-          placeholder="Scrivi un messaggio..."
-          style="flex: 1"
-        />
-        <button id="bottoneInvia" onclick="inviaIlMessaggio()">Invia</button>
-      </div>
-    </section>
+        <div style="display: flex; gap: 5px">
+          <input
+            id="msg"
+            type="text"
+            placeholder="Scrivi un messaggio..."
+            style="flex: 1"
+          />
+          <button id="bottoneInvia" onclick="inviaIlMessaggio()">Invia</button>
+        </div>
+      </section>
+      <section id="chat">...</section>
+      <section style="display: none" id="utenticonnessi">
+        <h2>Utenti Connessi</h2>
+        <div id="listaUtenti"></div>
+      </section>
+    </div>
   </body>
 </html>
