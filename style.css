@@ -205,6 +205,7 @@ body {
     background: #fafafa;
     padding: 15px;
     border-left: 2px solid #ddd;
+    border-radius: 10px; 
   }
   
   .utente {
@@ -213,7 +214,10 @@ body {
     padding: 5px 10px;
     border-radius: 10px;
   }
-  #utenticonnessi{
-    border-radius: 10px;
-    
+  .datainviomess {
+    font-size: 0.8em;
+    color: gray;
+    text-align: right;
+    margin-top: 3px;
   }
+  

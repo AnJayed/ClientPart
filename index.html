@@ -8,6 +8,7 @@
       "use strict";
       let nome = "";
       let pwd;
+     //document.getElementById("nome").value = "";
 
       function gestoreRicezione(messaggioRicevuto) {
         let mess = messaggioRicevuto.data.trim();
@@ -22,6 +23,7 @@
         } else if (mess.startsWith("M|")) {
           let parts = mess.split("|");
           let autore = parts[1];
+          console.log("la parte è" + parts[1]);
           let testo = parts[parts.length - 1];
 
           let area = document.getElementById("areaMessaggi");
@@ -52,6 +54,7 @@
           immagine.style.borderRadius = "50%";
 
           let nomeAutore = document.createElement("strong");
+
           nomeAutore.textContent = autore;
 
           autoreDiv.appendChild(immagine);
@@ -74,6 +77,22 @@
           aggiornaUtenti(mess);
           console.log("aggiorno gli utenti");
         }
+        //let oraeminuti = data.toISOString().slice(11, -5);
+        let area = document.getElementById("areaMessaggi");
+        let divMessaggio = document.createElement("div");
+        divMessaggio.classList.add("messaggio", "mio");
+
+        let oraDiv = document.createElement("div");
+        oraDiv.classList.add("datainviomess");
+        oraDiv.textContent = oraeminuti;
+        oraDiv.style.fontSize = "0.8em";
+        oraDiv.style.color = "gray";
+        oraDiv.style.textAlign = "right";
+        oraDiv.style.marginTop = "2px";
+
+        divMessaggio.appendChild(oraDiv);
+
+        area.appendChild(divMessaggio);
       }
 
       let ws = new WebSocket("ws://10.1.0.52:8090/chat25/5i2");
@@ -92,9 +111,10 @@
 
       function inviaIlMessaggio() {
         let data = new Date();
-        data.setHours(data.getHours() +1);
-        let timestamp = data.toISOString().slice(0, -1);
-        console.log("timestamp", timestamp);
+        data.setHours(data.getHours() + 1);
+        let timestamp = data.toISOString().slice(0, -5);
+        
+
         let messaggioDaInviare =
           "M" +
           "|" +
@@ -107,8 +127,17 @@
           "text/plain" +
           "|" +
           document.getElementById("msg").value;
-        ws.send(messaggioDaInviare);
+          ws.send(messaggioDaInviare);
+
+
+        
+        area.scrollTop = area.scrollHeight;
+
+
+        document.getElementById("msg").value = "";
+        
       }
+
       function aggiornaUtenti(mess) {
         let utenti = mess.split("|");
         let areaUtenti = document.getElementById("listaUtenti");
